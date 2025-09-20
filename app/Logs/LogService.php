@@ -33,8 +33,6 @@ class LogService
         }
 
         // Retorna últimos 30 logs
-        return $this->collection
-            ->find([], ['limit' => 30, 'sort' => ['timestamp' => -1]])
-            ->toArray();
+        return $this->collection->find([], ['limit' => 30, 'sort' => ['timestamp' => -1]])->toArray();
     }
 }
