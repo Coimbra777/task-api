@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "5646055e-dfb0-424d-ace2-56ca85fb8f9f",
+		"name": "Tasks API",
+		"description": "Coleção para testar o CRUD de Tasks e Logs da API Lumen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40464201",
+		"_collection_link": "https://plataform-api-5137.postman.co/workspace/API-Plataforma-EAD~49da34e2-05d9-4536-8627-a00c37e7691b/collection/40464201-5646055e-dfb0-424d-ace2-56ca85fb8f9f?action=share&source=collection_link&creator=40464201"
+	},
+	"item": [
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Listar todas as tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8989/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"api",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### **1.1 Listar todas as tasks**\n\n- **Método:** GET\n    \n- **Endpoint:** `/tasks`\n    \n- status: pending | done | concluida | pendente\n    \n- **Exemplo de Requisição (cURL):**\n    \n\n```\ncurl -X GET \"http://localhost:8989/api/tasks?status=pending\"\n\n ```\n\n- **Resposta de Exemplo:**\n    \n\n```\n[\n  {\n    \"id\": 1,\n    \"title\": \"Estudar Lumen\",\n    \"description\": \"Finalizar desafio de CRUD\",\n    \"status\": \"pending\",\n    \"created_at\": \"2025-09-20T12:00:00\",\n    \"updated_at\": \"2025-09-20T12:00:00\"\n  }\n]\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[{\"id\":1,\"title\":\"Estudar Lumen\",\"description\":\"Finalizar desafio de CRUD\",\"status\":\"pending\",\"created_at\":\"2025-09-20T12:00:00\",\"updated_at\":\"2025-09-20T12:00:00\"}]"
+						}
+					]
+				},
+				{
+					"name": "Criar uma nova task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Estuda Laravel\",\n  \"description\": \"Finalizou desafio de CRUD\",\n  \"status\": \"concluida\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8989/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"api",
+								"tasks"
+							]
+						},
+						"description": "### **1.2 Criar uma nova task**\n\n- **Método:** POST\n    \n- **Endpoint:** `/tasks`\n    \n- **Cabeçalhos:**\n    \n\n```\n{\n  \"Content-Type\": \"application/json\"\n}\n\n ```\n\n- **Corpo da Requisição:**\n    \n\n```\n{\n  \"title\": \"Estuda Laravel\",\n  \"description\": \"Finalizou desafio de CRUD\",\n  \"status\": \"concluida\"\n}\n\n ```\n\n- **Exemplo cURL:**\n    \n\n```\ncurl -X POST \"http://localhost:8989/api/tasks\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"title\": \"Estuda Laravel\",\n  \"description\": \"Finalizou desafio de CRUD\",\n  \"status\": \"concluida\"\n}'\n\n ```\n\n- **Resposta de Exemplo:**\n    \n\n```\n{\n  \"id\": 3,\n  \"title\": \"Estuda Laravel\",\n  \"description\": \"Finalizou desafio de CRUD\",\n  \"status\": \"concluida\",\n  \"created_at\": \"2025-09-20T12:30:00\",\n  \"updated_at\": \"2025-09-20T12:30:00\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"id\":3,\"title\":\"Estuda Laravel\",\"description\":\"Finalizou desafio de CRUD\",\"status\":\"concluida\",\"created_at\":\"2025-09-20T12:30:00\",\"updated_at\":\"2025-09-20T12:30:00\"}"
+						}
+					]
+				},
+				{
+					"name": "Obter task por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8989/api/tasks/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"api",
+								"tasks",
+								"3"
+							]
+						},
+						"description": "### **1.3 Obter task por ID**\n\n- **Método:** GET\n    \n- **Endpoint:** `/tasks/{id}`\n    \n- **Exemplo de URL:**\n    \n\n```\nhttp://localhost:8989/api/tasks/3\n\n ```\n\n- **Exemplo cURL:**\n    \n\n```\ncurl -X GET \"http://localhost:8989/api/tasks/3\"\n\n ```\n\n- **Resposta de Exemplo:**\n    \n\n```\n{\n  \"id\": 3,\n  \"title\": \"Estuda Laravel\",\n  \"description\": \"Finalizou desafio de CRUD\",\n  \"status\": \"concluida\",\n  \"created_at\": \"2025-09-20T12:30:00\",\n  \"updated_at\": \"2025-09-20T12:30:00\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"id\":3,\"title\":\"Estuda Laravel\",\"description\":\"Finalizou desafio de CRUD\",\"status\":\"concluida\",\"created_at\":\"2025-09-20T12:30:00\",\"updated_at\":\"2025-09-20T12:30:00\"}"
+						}
+					]
+				},
+				{
+					"name": "Atualizar task",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Estudar Lumen - Atualizado\",\n  \"description\": \"CRUD ajustado\",\n  \"status\": \"pendente\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8989/api/tasks/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"api",
+								"tasks",
+								"3"
+							]
+						},
+						"description": "### **1.4 Atualizar task**\n\n- **Método:** PUT\n    \n- **Endpoint:** `/tasks/{id}`\n    \n- **Cabeçalhos:**\n    \n\n```\n{\n  \"Content-Type\": \"application/json\"\n}\n\n ```\n\n- **Corpo da Requisição:**\n    \n\n```\n{\n  \"title\": \"Estudar Lumen - Atualizado\",\n  \"description\": \"CRUD ajustado\",\n  \"status\": \"pendente\"\n}\n\n ```\n\n- **Exemplo cURL:**\n    \n\n```\ncurl -X PUT \"http://localhost:8989/api/tasks/3\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"title\": \"Estudar Lumen - Atualizado\",\n  \"description\": \"CRUD ajustado\",\n  \"status\": \"pendente\"\n}'\n\n ```\n\n- **Resposta de Exemplo:**\n    \n\n```\n{\n  \"id\": 3,\n  \"title\": \"Estudar Lumen - Atualizado\",\n  \"description\": \"CRUD ajustado\",\n  \"status\": \"pendente\",\n  \"created_at\": \"2025-09-20T12:30:00\",\n  \"updated_at\": \"2025-09-20T13:00:00\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"id\":3,\"title\":\"Estudar Lumen - Atualizado\",\"description\":\"CRUD ajustado\",\"status\":\"pendente\",\"created_at\":\"2025-09-20T12:30:00\",\"updated_at\":\"2025-09-20T13:00:00\"}"
+						}
+					]
+				},
+				{
+					"name": "Excluir task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8989/api/tasks/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"api",
+								"tasks",
+								"1"
+							]
+						},
+						"description": "### **1.5 Excluir task**\n\n- **Método:** DELETE\n    \n- **Endpoint:** `/tasks/{id}`\n    \n- **Exemplo cURL:**\n    \n\n```\ncurl -X DELETE \"http://localhost:8989/api/tasks/1\"\n\n ```\n\n- **Resposta de Exemplo:**\n    \n\n```\n{\n  \"message\": \"Task excluída com sucesso.\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\"message\":\"Task excluída com sucesso.\"}"
+						}
+					]
+				}
+			],
+			"description": "# **Tasks API – Documentação Postman**\n\n**Base URL:** `http://localhost:8989/api`  \n**Descrição:** API para gerenciamento de Tasks e consulta de Logs no Lumen."
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "Listar últimos 30 logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8989/api/logs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"api",
+								"logs"
+							]
+						},
+						"description": "## **2\\. Logs**\n\n### **2.1 Listar últimos 30 logs**\n\n- **Método:** GET\n    \n- **Endpoint:** `/logs`\n    \n- **Parâmetros de Query (opcional):**\n    \n\n```\nid: string (filtrar log específico - atualmente desativado)\n\n ```\n\n- **Exemplo de URL:**\n    \n\n```\nhttp://localhost:8989/api/logs\n\n ```\n\n- **Exemplo cURL:**\n    \n\n```\ncurl -X GET \"http://localhost:8989/api/logs\"\n\n ```\n\n- **Resposta de Exemplo:**\n    \n\n```\n[\n  {\n    \"id\": \"68cf01a05460493ad5076555\",\n    \"action\": \"Criar task\",\n    \"user_id\": 1,\n    \"description\": \"Task 'Estuda Laravel' criada com sucesso\",\n    \"created_at\": \"2025-09-20T12:30:00\"\n  }\n]\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Exemplo de resposta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "[{\"id\":\"68cf01a05460493ad5076555\",\"action\":\"Criar task\",\"user_id\":1,\"description\":\"Task 'Estuda Laravel' criada com sucesso\",\"created_at\":\"2025-09-20T12:30:00\"}]"
+						}
+					]
+				}
+			]
+		}
+	]
+}
