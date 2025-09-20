@@ -1,0 +1,96 @@
+version: "3.8"
+
+services:
+  # App PHP (Lumen)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lumen_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - db
+      - mongodb
+      - redis
+    networks:
+      - laravel
+
+  # Nginx
+  nginx:
+    image: nginx:alpine
+    container_name: lumen_nginx
+    restart: unless-stopped
+    ports:
+      - "8989:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  # MySQL
+  db:
+    image: mysql:8.0
+    container_name: lumen_mysql
+    platform: linux/x86_64
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-lumen_db}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+      MYSQL_USER: ${DB_USERNAME:-username}
+    volumes:
+      - ./.docker/mysql/dbdata:/var/lib/mysql
+    ports:
+      - "3300:3306"
+    networks:
+      - laravel
+
+  # MongoDB
+  mongodb:
+    image: mongo:6
+    container_name: lumen_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.docker/mongo/data:/data/db
+    networks:
+      - laravel
+
+  # PhpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: lumen_phpmyadmin
+    platform: linux/x86_64
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    depends_on:
+      - db
+    networks:
+      - laravel
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: lumen_redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge

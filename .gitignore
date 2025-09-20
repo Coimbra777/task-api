@@ -1,0 +1,46 @@
+# -----------------------------
+# Laravel / PHP
+# -----------------------------
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+/.env
+/.env.local
+/.env.*.backup
+/.phpunit.result.cache
+.phpunit.cache
+
+
+# -----------------------------
+# IDE / Editor
+# -----------------------------
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project
+
+# -----------------------------
+# Logs & Cache
+# -----------------------------
+/storage/logs/*.log
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# -----------------------------
+# OS / System
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Docker
+# -----------------------------
+.docker/**/tmp
+.docker/**/cache
+.docker/**/logs
+.docker/mysql/dbdata/
+
+# Ignorar dados do MongoDB
+.docker/mongo/data/
