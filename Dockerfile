@@ -1,20 +1,39 @@
-FROM php:8.2-fpm
+# Imagem base com PHP 8.3 (ajuste para a versão que você usa)
+FROM php:8.3-fpm
 
-# Instalar dependências básicas
+# Instala dependências do sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
-    libpq-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
     libzip-dev \
-    zip \
     curl \
-    && docker-php-ext-install pdo pdo_mysql zip \
-    && pecl install mongodb redis \
-    && docker-php-ext-enable mongodb redis
+    pkg-config \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instalar Composer
+# Instala extensões PHP necessárias
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+
+# Instala o driver do MongoDB para PHP
+RUN pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
+# Instala Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Configura diretório de trabalho
 WORKDIR /var/www
+
+# Copia arquivos da aplicação
+COPY . /var/www
+
+# Instala dependências do Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Expondo a porta do PHP-FPM
+EXPOSE 9000
 
 CMD ["php-fpm"]

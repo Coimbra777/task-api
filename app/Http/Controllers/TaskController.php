@@ -14,7 +14,23 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = $this->service->getAll($request->query('status'));
+        // Mapear status português → inglês
+        $mapping = [
+            'pendente' => 'pending',
+            'em_progresso' => 'in_progress',
+            'concluida' => 'done'
+        ];
+
+        $status = $request->query('status');
+
+        if ($status && isset($mapping[$status])) {
+            $status = $mapping[$status];
+        } elseif (!in_array($status, ['pending', 'in_progress', 'done'])) {
+            return ApiResponse::error("Status inválido.", 422);
+        }
+
+        $tasks = $this->service->getAll($status);
+
         return ApiResponse::success(TaskResource::collection($tasks));
     }
 

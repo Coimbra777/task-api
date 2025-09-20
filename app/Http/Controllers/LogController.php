@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Logs\LogService;
 use App\Helpers\ApiResponse;
 use Laravel\Lumen\Routing\Controller;
+use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
@@ -15,8 +16,9 @@ class LogController extends Controller
         $this->logService = $logService;
     }
 
-    public function index(?string $id = null)
+    public function index(Request $request)
     {
+        $id = $request->query('id');
         $logs = $this->logService->getLogs($id);
 
         return ApiResponse::success($logs);

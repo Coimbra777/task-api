@@ -24,5 +24,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('tasks/{id}', 'TaskController@update');
     $router->delete('tasks/{id}', 'TaskController@destroy');
 
-    $router->get('logs[/{id}]', 'LogController@index');
+    $router->get('logs', 'LogController@index');
 });

@@ -4,7 +4,7 @@ namespace App\Logs;
 
 use MongoDB\Client;
 use Illuminate\Support\Carbon;
-use MongoDB\Laravel\Eloquent\Casts\ObjectId;
+use MongoDB\BSON\ObjectId;
 
 class LogService
 {
@@ -32,6 +32,9 @@ class LogService
             return $this->collection->findOne(['_id' => new ObjectId($id)]);
         }
 
-        return $this->collection->find([], ['limit' => 30, 'sort' => ['timestamp' => -1]])->toArray();
+        // Retorna últimos 30 logs
+        return $this->collection
+            ->find([], ['limit' => 30, 'sort' => ['timestamp' => -1]])
+            ->toArray();
     }
 }
