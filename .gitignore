@@ -10,6 +10,10 @@
 /.env.*.backup
 /.phpunit.result.cache
 .phpunit.cache
+.docker/mysql/dbdata
+.docker/mongo/data
+node_modules
+vendor
 
 
 # -----------------------------

@@ -10,11 +10,15 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function __construct(private TaskService $service) {}
+    protected $service;
+
+    public function __construct(TaskService $service)
+    {
+        $this->service = $service;
+    }
 
     public function index(Request $request)
     {
-        // Mapear status português → inglês
         $mapping = [
             'pendente' => 'pending',
             'em_progresso' => 'in_progress',
@@ -25,7 +29,9 @@ class TaskController extends Controller
 
         if ($status && isset($mapping[$status])) {
             $status = $mapping[$status];
-        } elseif (!in_array($status, ['pending', 'in_progress', 'done'])) {
+        }
+
+        if ($status && !in_array($status, ['pending', 'in_progress', 'done'])) {
             return ApiResponse::error("Status inválido.", 422);
         }
 

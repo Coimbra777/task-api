@@ -46,7 +46,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
       MYSQL_USER: ${DB_USERNAME:-username}
     volumes:
-      - ./.docker/mysql/dbdata:/var/lib/mysql
+      - ./.docker/mysql/dbdata:/var/lib/mysql:rw
     ports:
       - "3300:3306"
     networks:
@@ -60,7 +60,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./.docker/mongo/data:/data/db
+      - ./.docker/mongo/data:/data/db:rw
     networks:
       - laravel
 

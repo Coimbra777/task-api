@@ -1,26 +1,131 @@
-# Lumen PHP Framework
+API backend para gerenciamento de tarefas com logs, construída em **Laravel Lumen 11**.
+A aplicação permite criar, listar, atualizar e deletar tarefas, além de registrar logs das ações realizadas.
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+---
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Tecnologias Utilizadas
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+-   PHP 8.3 + Lumen 11
+-   MySQL 8.0 (para tarefas)
+-   MongoDB 6 (para logs)
+-   Redis (opcional, para cache ou fila)
+-   Docker / Docker Compose
+-   PHPUnit (para testes automatizados)
 
-## Official Documentation
+---
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Estrutura de Endpoints
 
-## Contributing
+Todos os endpoints estão no prefixo `/api`:
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Método | Endpoint        | Descrição                                                                |
+| ------ | --------------- | ------------------------------------------------------------------------ |
+| GET    | /api/tasks      | Lista todas as tarefas (com filtro opcional por status)                  |
+| GET    | /api/tasks/{id} | Retorna uma tarefa pelo ID                                               |
+| POST   | /api/tasks      | Cria uma nova tarefa                                                     |
+| PUT    | /api/tasks/{id} | Atualiza uma tarefa                                                      |
+| DELETE | /api/tasks/{id} | Remove uma tarefa                                                        |
+| GET    | /api/logs       | Lista os últimos 30 logs (ou 1 log se `id` for passado como query param) |
 
-## Security Vulnerabilities
+> Status válidos para tarefas: `pending`, `in_progress`, `done`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Instruções para rodar o projeto
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Clonar o repositório
+
+```sh
+git clone https://github.com/Coimbra777/task-api
+```
+
+```sh
+cd tasks-api
+```
+
+### Suba os containers do projeto
+
+```sh
+docker-compose up -d --build
+```
+
+---
+
+Isso irá criar containers para:
+
+App PHP/Lumen
+
+Nginx
+
+MySQL
+
+MongoDB
+
+Redis
+
+PhpMyAdmin (acesso web ao MySQL)
+
+---
+
+### Crie o Arquivo .env
+
+```sh
+cp .env.example .env
+```
+
+### Acesse o container app
+
+```sh
+docker exec -it lumen_app bash
+```
+
+### Instale as dependências do projeto
+
+```sh
+composer install
+```
+
+### Gere a key do projeto Laravel
+
+```sh
+php artisan key:generate
+```
+
+### Rodar as migrations
+
+```sh
+php artisan migrate
+```
+
+Acesse o projeto
+[http://localhost:8989](http://localhost:8989)
+
+### Comando para rodar tests automatizados
+
+```sh
+docker exec -it lumen_app vendor/bin/phpunit
+```
+
+### Testar a API no Postman
+
+---
+
+1.  Abra o Postman
+
+2.  Importe o arquivo JSON que está na pasta public/task-api.json
+
+3.  Todos os endpoints já estarão configurados para teste
+
+4.  Redis (opcional, para cache ou fila)
+
+5.  Você pode usar o Postman para:
+
+    -   Criar novas tarefas
+
+    -   Listar tarefas por status
+
+    -   Atualizar ou deletar tarefas
+
+    -   Consultar logs da aplicação
+
+---

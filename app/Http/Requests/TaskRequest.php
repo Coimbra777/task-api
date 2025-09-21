@@ -25,7 +25,7 @@ class TaskRequest
         $rules = [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'in:pending,in_progress,done',
+            'status' => 'nullable|in:pending,in_progress,done',
         ];
 
         $messages = [

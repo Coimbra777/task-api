@@ -1,39 +1,42 @@
-# Imagem base com PHP 8.3 (ajuste para a versão que você usa)
+# Base PHP-FPM
 FROM php:8.3-fpm
 
-# Instala dependências do sistema
+# Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
-    libpng-dev \
+    zip \
+    libzip-dev \
     libonig-dev \
     libxml2-dev \
-    libzip-dev \
-    curl \
+    libcurl4-openssl-dev \
     pkg-config \
     libssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install pdo_mysql mbstring xml curl zip bcmath
 
-# Instala extensões PHP necessárias
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+# Instalar Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Instala o driver do MongoDB para PHP
+# Instalar MongoDB driver
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
 
-# Instala Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Instalar PHPUnit globalmente
+RUN composer global require --dev phpunit/phpunit ^10
 
-# Configura diretório de trabalho
+# Adicionar composer global bin ao PATH
+ENV PATH="$PATH:/root/.composer/vendor/bin"
+
+# Diretório da aplicação
 WORKDIR /var/www
 
-# Copia arquivos da aplicação
-COPY . /var/www
+# Copiar arquivos do projeto
+COPY . .
 
-# Instala dependências do Composer
-RUN composer install --no-dev --optimize-autoloader
+# Instalar dependências do projeto
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Expondo a porta do PHP-FPM
+# Expor porta PHP-FPM
 EXPOSE 9000
 
 CMD ["php-fpm"]

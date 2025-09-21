@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Logs\LogService;
 use App\Helpers\ApiResponse;
-use Laravel\Lumen\Routing\Controller;
 use Illuminate\Http\Request;
+use Laravel\Lumen\Routing\Controller;
 
 class LogController extends Controller
 {
-    private LogService $logService;
+    protected $logService;
 
     public function __construct(LogService $logService)
     {
