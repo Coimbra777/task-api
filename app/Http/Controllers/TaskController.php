@@ -19,6 +19,7 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
+        // Mapeamento português → inglês
         $mapping = [
             'pendente' => 'pending',
             'em_progresso' => 'in_progress',

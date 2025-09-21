@@ -13,9 +13,12 @@ class TaskTest extends TestCase
     {
         parent::setUp();
 
+        $this->artisan('migrate');
+
         $client = new Client("mongodb://mongodb:27017");
         $client->selectDatabase('logs_test')->logs->deleteMany([]);
     }
+
 
     public function testListTasksEmpty()
     {

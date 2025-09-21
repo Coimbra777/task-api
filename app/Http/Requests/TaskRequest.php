@@ -18,18 +18,20 @@ class TaskRequest
 
         $input = $request->all();
 
-        if (isset($input['status']) && isset($mapping[$input['status']])) {
-            $input['status'] = $mapping[$input['status']];
+        if (isset($input['status'])) {
+            $input['status'] = $mapping[$input['status']] ?? $input['status'];
+        } else {
+            $input['status'] = 'pending';
         }
 
         $rules = [
-            'title' => 'required|string|max:255',
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'nullable|in:pending,in_progress,done',
+            'status'      => 'required|in:pending,in_progress,done',
         ];
 
         $messages = [
-            'status.in' => 'The selected status is invalid.'
+            'status.in' => 'O status selecionado é inválido. Deve ser: pendente, em_progresso ou concluida.',
         ];
 
         $validator = app('validator')->make($input, $rules, $messages);
