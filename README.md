@@ -127,3 +127,9 @@ docker exec -it lumen_app vendor/bin/phpunit
     -   Consultar logs da aplicação
 
 ---
+
+### Comando para para os containers
+
+```sh
+docker composer down -v
+```
