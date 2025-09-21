@@ -38,10 +38,6 @@ Todos os endpoints estão no prefixo `/api`:
 git clone https://github.com/Coimbra777/task-api
 ```
 
-```sh
-cd tasks-api
-```
-
 ### Suba os containers do projeto
 
 ```sh
