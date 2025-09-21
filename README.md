@@ -41,7 +41,7 @@ git clone https://github.com/Coimbra777/task-api
 ### Suba os containers do projeto
 
 ```sh
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ---
