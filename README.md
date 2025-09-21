@@ -116,9 +116,7 @@ docker exec -it lumen_app vendor/bin/phpunit
 
 3.  Todos os endpoints já estarão configurados para teste
 
-4.  Redis (opcional, para cache ou fila)
-
-5.  Você pode usar o Postman para:
+4.  Você pode usar o Postman para:
 
     -   Criar novas tarefas
 
