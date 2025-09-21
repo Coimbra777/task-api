@@ -128,7 +128,7 @@ docker exec -it lumen_app vendor/bin/phpunit
 
 ---
 
-### Comando para para os containers
+### Comando para encerrar os containers
 
 ```sh
 docker composer down -v
