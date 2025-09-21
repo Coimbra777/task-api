@@ -38,6 +38,12 @@ Todos os endpoints estão no prefixo `/api`:
 git clone https://github.com/Coimbra777/task-api
 ```
 
+### Entre no diretório e abra no VSCode
+
+```sh
+cd task-api
+```
+
 ### Suba os containers do projeto
 
 ```sh
