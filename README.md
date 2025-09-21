@@ -78,12 +78,6 @@ docker exec -it lumen_app bash
 composer install
 ```
 
-### Gere a key do projeto Laravel
-
-```sh
-php artisan key:generate
-```
-
 ### Rodar as migrations
 
 ```sh
