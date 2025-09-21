@@ -8,7 +8,6 @@ A aplicação permite criar, listar, atualizar e deletar tarefas, além de regis
 -   PHP 8.3 + Lumen 11
 -   MySQL 8.0 (para tarefas)
 -   MongoDB 6 (para logs)
--   Redis (opcional, para cache ou fila)
 -   Docker / Docker Compose
 -   PHPUnit (para testes automatizados)
 
@@ -60,8 +59,6 @@ Nginx
 MySQL
 
 MongoDB
-
-Redis
 
 PhpMyAdmin (acesso web ao MySQL)
 

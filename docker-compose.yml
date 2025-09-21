@@ -15,7 +15,6 @@ services:
     depends_on:
       - db
       - mongodb
-      - redis
     networks:
       - laravel
 
@@ -78,16 +77,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
     depends_on:
       - db
-    networks:
-      - laravel
-
-  # Redis
-  redis:
-    image: redis:7-alpine
-    container_name: lumen_redis
-    restart: unless-stopped
-    ports:
-      - "6380:6379"
     networks:
       - laravel
 
