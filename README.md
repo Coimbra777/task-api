@@ -90,15 +90,6 @@ composer install
 php artisan migrate
 ```
 
-Acesse o projeto
-[http://localhost:8989](http://localhost:8989)
-
-### Comando para rodar tests automatizados
-
-```sh
-docker exec -it lumen_app vendor/bin/phpunit
-```
-
 ### Testar a API no Postman
 
 ---
@@ -121,8 +112,17 @@ docker exec -it lumen_app vendor/bin/phpunit
 
 ---
 
+### Comando para rodar tests automatizados
+
+```sh
+docker exec -it lumen_app vendor/bin/phpunit
+```
+
 ### Comando para encerrar os containers
 
 ```sh
 docker composer down -v
 ```
+
+
+
